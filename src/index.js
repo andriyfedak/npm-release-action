@@ -15,15 +15,14 @@ async function createDeployment() {
   const deployType = core.getInput('deploy', {required: false });
   if (!deployType) {
     return;
-  }
-  if (deployType === 'package') {
+  } else if (deployType === 'package') {
     await run('npm', 'publish')
-  }
-  if (deployType === 'serverless') {
+  } else if (deployType === 'serverless') {
     await run('npm', 'install', 'serverless')
     await run('npx', 'serverless', 'deploy');
+  } else {
+    throw new Error('Invalid deployment type');
   }
-  throw new Error('Invalid deployment type');
 }
 
 function getCurrentVerison() {
