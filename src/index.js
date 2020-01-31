@@ -9,7 +9,8 @@ function getCurrentVerison() {
 }
 
 async function getCurrentRelease() {
-  octokit = new GitHub(process.env.ACTIONS_RUNTIME_TOKEN);
+  console.log(context)
+  octokit = new GitHub(process.env.GITHUB_TOKEN);
   const { owner, repo } = context.repo;
   const release = await octokit.repos.getLatestRelease({
     owner,
