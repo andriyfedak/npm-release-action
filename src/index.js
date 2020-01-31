@@ -15,6 +15,8 @@ async function getCurrentRelease() {
     owner,
     repo
   });
+  console.log(release);
+
   core.exportVariable("NPM_RELEASE_VERSION", release);
   return release;
 }
