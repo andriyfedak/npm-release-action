@@ -6,15 +6,16 @@ const { GitHub, context} = require('@actions/github');
 
 async function run(cmd, ...params) {
   const options = {
-    // cwd: process.env.GITHUB_WORKSPACE,
-    failOnStdErr: true
+    failOnStdErr: false
   };
-
   return exec.exec(cmd, params, options);
 }
 
 async function createDeployment() {
   const deployType = core.getInput('deploy', {required: false });
+  if (!deployType) {
+    return;
+  }
   if (deployType === 'package') {
     await run('npm', 'publish')
   }
@@ -22,6 +23,7 @@ async function createDeployment() {
     await run('npm', 'install', 'serverless')
     await run('npx', 'serverless', 'deploy');
   }
+  throw new Error('Invalid deployment type');
 }
 
 function getCurrentVerison() {
@@ -57,9 +59,8 @@ function createNewRelease(version) {
 }
 
 (async () => {
+  core.exportVariable('NODE_AUTH_TOKEN', process.env.GITHUB_TOKEN);
   try {
-    console.log(process.env.fileLocation);
-
     const currentRelease = await getCurrentRelease();
     const currentVersion = await getCurrentVerison();
 
@@ -74,6 +75,7 @@ function createNewRelease(version) {
     } else {
       core.setOutput('version', false);
     }
+    core.exportVariable('NODE_AUTH_TOKEN', 'XXXXX-XXXXX-XXXXX-XXXXX');
   } catch (error) {
     core.setFailed(error.message);
   }
