@@ -3,9 +3,10 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 function getCurrentVerison() {
-  const {version} = require(path.resolve(process.env.GITHUB_WORKSPACE, 'package.json'));
-  core.exportVariable("NPM_PKG_VERSION", version);
-  return version
+  // const {version} = require(path.resolve(process.env.GITHUB_WORKSPACE, 'package.json'));
+  console.log(path.resolve(process.env.GITHUB_WORKSPACE, 'package.json'))
+  // core.exportVariable("NPM_PKG_VERSION", version);
+  return '1.0.1'
 }
 
 function getCurrentTag() {
