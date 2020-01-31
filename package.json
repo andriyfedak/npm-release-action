@@ -1,9 +1,10 @@
 {
   "name": "npm-release-action",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "ncc build src/index.js -o dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,8 @@
   "dependencies": {
     "@actions/core": "^1.2.2",
     "@actions/github": "^2.1.0"
+  },
+  "devDependencies": {
+    "@zeit/ncc": "^0.21.0"
   }
 }

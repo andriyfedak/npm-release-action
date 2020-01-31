@@ -1,9 +1,9 @@
-name: 'Create a NPM Release'
-description: 'Create a release package'
+name: 'Create npm release'
+description: 'Create a release based on package version'
 author: 'Anfrantic'
 runs:
   using: 'node12'
-  main: 'index.js'
+  main: 'dist/index.js'
 branding:
   icon: 'tag'
   color: 'gray-dark'
