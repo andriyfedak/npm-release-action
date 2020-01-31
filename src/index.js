@@ -1,3 +1,4 @@
+const fs = require('fs')
 const path = require('path')
 const core = require('@actions/core');
 const exec = require('@actions/exec');
@@ -57,6 +58,8 @@ function createNewRelease(version) {
 
 (async () => {
   try {
+    console.log(process.env.fileLocation);
+
     const currentRelease = await getCurrentRelease();
     const currentVersion = await getCurrentVerison();
 
