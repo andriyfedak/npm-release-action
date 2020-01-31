@@ -1,5 +1,6 @@
 const path = require('path')
 const core = require('@actions/core');
+const exec = require('@actions/exec');
 const { GitHub, context} = require('@actions/github');
 
 function getCurrentVerison() {
@@ -48,6 +49,7 @@ function createNewRelease(version) {
       core.setOutput('version', currentVersion);
     } else {
       core.setOutput('version', false);
+      await exec('ls -lh')
     }
   } catch (error) {
     core.setFailed(error.message);
