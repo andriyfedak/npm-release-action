@@ -9,14 +9,16 @@ function getCurrentVerison() {
 }
 
 async function getCurrentRelease() {
-  octokit = new GitHub(context.GITHUB_TOKEN);
-  const { owner, repo } = context.repo;
-  const release = await octokit.getLatestRelease({
-    owner,
-    repo
-  });
-  core.exportVariable("NPM_CURRENT_VERSION", version);
-  return release;
+  console.log(context.GITHUB_TOKEN);
+  // octokit = new GitHub(context.GITHUB_TOKEN);
+  // const { owner, repo } = context.repo;
+  // const release = await octokit.getLatestRelease({
+  //   owner,
+  //   repo
+  // });
+  // core.exportVariable("NPM_CURRENT_VERSION", version);
+  // return release;
+  return '1.0.0'
 }
 
 (async () => {
