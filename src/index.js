@@ -17,11 +17,9 @@ function getCurrentRelease() {
   })
   .then(res => {
     const version = res.data.tag_name.replace(/[a-zA-Z\s]+/, '');
-    core.exportVariable("NPM_RELEASE_VERSION", version);
     return version
   })
   .catch(() => {
-    core.exportVariable("NPM_RELEASE_VERSION", 'none');
     return 'none'
   });
 }
@@ -47,6 +45,7 @@ function createNewRelease(version) {
 
     if (currentRelease !== currentVersion) {
       console.log('Creating new release: ', currentVersion);
+      core.exportVariable('NPM_RELEASE_VERSION', currentVersion);
       await createNewRelease(currentVersion);
     }
   } catch (error) {
