@@ -17,7 +17,7 @@ async function getCurrentRelease() {
       owner,
       repo
     });
-    console.log(res);
+    console.log(res.data);
     if (res.data && res.data.tag_name) {
       relese = res.data.tag_name
     }
