@@ -5,7 +5,7 @@ const { GitHub, context} = require('@actions/github');
 
 async function run(cmd, ...params) {
   const options = {
-    cwd: process.env.GITHUB_WORKSPACE,
+    // cwd: process.env.GITHUB_WORKSPACE,
     failOnStdErr: true
   };
 
