@@ -9,7 +9,7 @@ function getCurrentVerison() {
 }
 
 async function getCurrentRelease() {
-  octokit = new GitHub(process.env.GITHUB_TOKEN);
+  octokit = new GitHub(process.env.ACTIONS_RUNTIME_TOKEN);
   const { owner, repo } = context.repo;
   const release = await octokit.repos.getLatestRelease({
     owner,
@@ -24,8 +24,8 @@ async function getCurrentRelease() {
     const currentRelease = await getCurrentRelease();
     const curenttVersion = await getCurrentVerison();
 
-    console.log('Current tag: ',currentTag);
-    console.log('Current version: ', currentVersion);
+    console.log('Current tag: ',currentRelease);
+    console.log('Current version: ', curenttVersion);
     console.log('Samever: ', currentVersion === currentTag);
 
   } catch (error) {
