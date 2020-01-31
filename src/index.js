@@ -3,6 +3,26 @@ const core = require('@actions/core');
 const exec = require('@actions/exec');
 const { GitHub, context} = require('@actions/github');
 
+async function run(cmd, ...params) {
+  const options = {
+    cwd: process.env.GITHUB_WORKSPACE,
+    failOnStdErr: true
+  };
+
+  return exec.exec(cmd, params, options);
+}
+
+async function createDeployment() {
+  const deployType = core.getInput('deploy', {required: false });
+  if (deployType === 'package') {
+    await run('npm', 'publish')
+  }
+  if (deployType === 'serverless') {
+    await run('npm', 'install', 'serverless')
+    await run('npx', 'serverless', 'deploy');
+  }
+}
+
 function getCurrentVerison() {
   const { version } = require(path.join(process.env.GITHUB_WORKSPACE, 'package.json'));
   return version;
@@ -46,10 +66,10 @@ function createNewRelease(version) {
     if (currentRelease !== currentVersion) {
       console.log('Creating new release: ', currentVersion);
       await createNewRelease(currentVersion);
+      await createDeployment();
       core.setOutput('version', currentVersion);
     } else {
       core.setOutput('version', false);
-      await exec('ls -lh')
     }
   } catch (error) {
     core.setFailed(error.message);
