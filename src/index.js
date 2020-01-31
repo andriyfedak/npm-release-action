@@ -4,8 +4,7 @@ const { GitHub, context} = require('@actions/github');
 
 function getCurrentVerison() {
   const { version } = require(path.join(process.env.GITHUB_WORKSPACE, 'package.json'));
-  core.exportVariable("NPM_CURRENT_VERSION", version);
-  return version
+  return version;
 }
 
 function getCurrentRelease() {
@@ -46,9 +45,6 @@ function createNewRelease(version) {
     if (currentRelease !== currentVersion) {
       console.log('Creating new release: ', currentVersion);
       await createNewRelease(currentVersion);
-      core.setOutput('released', true);
-    } else {
-      core.setOutput('released', false);
     }
   } catch (error) {
     core.setFailed(error.message);
