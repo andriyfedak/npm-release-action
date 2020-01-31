@@ -45,9 +45,9 @@ function createNewRelease(version) {
     if (currentRelease !== currentVersion) {
       console.log('Creating new release: ', currentVersion);
       await createNewRelease(currentVersion);
-      core.setOutput('released', true);
+      core.setOutput('version', currentVersion);
     } else {
-      core.setOutput('released', false);
+      core.setOutput('version', false);
     }
   } catch (error) {
     core.setFailed(error.message);
