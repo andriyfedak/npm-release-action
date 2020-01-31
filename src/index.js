@@ -11,10 +11,16 @@ function getCurrentVerison() {
 async function getCurrentRelease() {
   octokit = new GitHub(process.env.GITHUB_TOKEN);
   const { owner, repo } = context.repo;
-  const release = await octokit.repos.getLatestRelease({
-    owner,
-    repo
-  });
+  const release = 'none';
+  try {
+     release = await octokit.repos.getLatestRelease({
+      owner,
+      repo
+    });
+  } catch(e) {
+    console.log(e);
+  }
+ 
   console.log(release);
 
   core.exportVariable("NPM_RELEASE_VERSION", release);
@@ -31,6 +37,7 @@ async function getCurrentRelease() {
     console.log('Samever: ', currentVersion === currentRelease);
 
   } catch (error) {
+    console.log(error)
     core.setFailed(error.message);
   }
 })()
