@@ -26,7 +26,7 @@ function getCurrentRelease() {
   });
 }
 
-function createNewRelease(vesrion) {
+function createNewRelease(version) {
   octokit = new GitHub(process.env.GITHUB_TOKEN);
   const { owner, repo } = context.repo;
   return octokit.repos.createRelease({
