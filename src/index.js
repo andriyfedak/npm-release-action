@@ -28,10 +28,10 @@ function getCurrentRelease() {
 (async () => {
   try {
     const currentRelease = await getCurrentRelease();
-    const curenttVersion = await getCurrentVerison();
+    const currentVersion = await getCurrentVerison();
 
     console.log('Current tag: ', currentRelease);
-    console.log('Current version: ', curenttVersion);
+    console.log('Current version: ', currentVersion);
     console.log('Samever: ', currentVersion === currentRelease);
 
   } catch (error) {
