@@ -4,21 +4,19 @@ const {GitHub, context} = require('@actions/github');
 
 function getCurrentVerison() {
   const {version} = require(path.join(process.env.GITHUB_WORKSPACE, 'package.json'));
-  core.exportVariable("NPM_PKG_VERSION", version);
+  core.exportVariable("NPM_CURRENT_VERSION", version);
   return version
 }
 
 async function getCurrentRelease() {
-  console.log(context);
-  // octokit = new GitHub(context.GITHUB_TOKEN);
-  // const { owner, repo } = context.repo;
-  // const release = await octokit.getLatestRelease({
-  //   owner,
-  //   repo
-  // });
-  // core.exportVariable("NPM_CURRENT_VERSION", version);
-  // return release;
-  return '1.0.0'
+  octokit = new GitHub(process.env.GITHUB_TOKEN);
+  const { owner, repo } = context.repo;
+  const release = await octokit.getLatestRelease({
+    owner,
+    repo
+  });
+  core.exportVariable("NPM_RELEASE_VERSION", version);
+  return release;
 }
 
 (async () => {
