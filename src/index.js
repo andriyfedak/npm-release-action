@@ -32,7 +32,7 @@ function createNewRelease(version) {
   return octokit.repos.createRelease({
     owner,
     repo,
-    version,
+    tag_name: version,
     name: `Release v${version}`
   });
 }
