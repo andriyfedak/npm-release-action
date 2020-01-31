@@ -16,12 +16,24 @@ function getCurrentRelease() {
       repo
   })
   .then(res => {
-    core.exportVariable("NPM_RELEASE_VERSION", res.data.tag_name);
-    return res.data.tag_name
+    const version = res.data.tag_name.replace(/[a-zA-Z\s]+/, '');
+    core.exportVariable("NPM_RELEASE_VERSION", version);
+    return version
   })
   .catch(() => {
     core.exportVariable("NPM_RELEASE_VERSION", 'none');
     return 'none'
+  });
+}
+
+function createNewRelease(vesrion) {
+  octokit = new GitHub(process.env.GITHUB_TOKEN);
+  const { owner, repo } = context.repo;
+  return octokit.repos.createRelease({
+    owner,
+    repo,
+    version,
+    name: `Release v${version}`
   });
 }
 
@@ -32,10 +44,12 @@ function getCurrentRelease() {
 
     console.log('Current tag: ', currentRelease);
     console.log('Current version: ', currentVersion);
-    console.log('Samever: ', currentVersion === currentRelease);
 
+    if (currentRelease !== currentVersion) {
+      console.log('Creating new release: ', currentVersion);
+      await createNewRelease(currentVersion);
+    }
   } catch (error) {
-    console.log(error)
     core.setFailed(error.message);
   }
 })()
