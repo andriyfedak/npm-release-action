@@ -1,6 +1,13 @@
-name: 'Create npm release'
+name: 'Create release'
 description: 'Create a release based on package version'
-author: 'Anfrantic'
+author: 'G-Network'
+inputs:
+  deploy:
+    description: 'Number of Octocats'
+    required: false
+outputs:
+  version:
+    description: 'New release version or false if no release'
 runs:
   using: 'node12'
   main: 'dist/index.js'
