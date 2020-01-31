@@ -1,22 +1,21 @@
 const path = require('path')
 const core = require('@actions/core');
-const {GitHub, context} = require('@actions/github');
+const { GitHub, context} = require('@actions/github');
 
 function getCurrentVerison() {
-  const {version} = require(path.join(process.env.GITHUB_WORKSPACE, 'package.json'));
+  const { version } = require(path.join(process.env.GITHUB_WORKSPACE, 'package.json'));
   core.exportVariable("NPM_CURRENT_VERSION", version);
   return version
 }
 
 async function getCurrentRelease() {
-  console.log(context)
   octokit = new GitHub(process.env.GITHUB_TOKEN);
   const { owner, repo } = context.repo;
   const release = await octokit.repos.getLatestRelease({
     owner,
     repo
   });
-  core.exportVariable("NPM_RELEASE_VERSION", version);
+  core.exportVariable("NPM_RELEASE_VERSION", release);
   return release;
 }
 
@@ -27,7 +26,7 @@ async function getCurrentRelease() {
 
     console.log('Current tag: ',currentRelease);
     console.log('Current version: ', curenttVersion);
-    console.log('Samever: ', currentVersion === currentTag);
+    console.log('Samever: ', currentVersion === currentRelease);
 
   } catch (error) {
     core.setFailed(error.message);
